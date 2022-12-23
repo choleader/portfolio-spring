@@ -9,4 +9,5 @@ public interface BoardRepository {
 	Board save(Board board);
 	List<Board> findAll();
 	Optional<Board> findByNumber(Long number);
+	void update(Long number, Board updateBoard);
 }

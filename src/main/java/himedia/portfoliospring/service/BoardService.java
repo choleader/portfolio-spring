@@ -29,5 +29,9 @@ public class BoardService {
 	public Optional<Board> findByNumber(Long number) {
 		return boardRepository.findByNumber(number);
 	}
+	
+	public void update(Long number, Board updBoard) {
+		boardRepository.update(number, updBoard);
+	}
 
 }

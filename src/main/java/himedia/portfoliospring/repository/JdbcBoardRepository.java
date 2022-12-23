@@ -66,7 +66,42 @@ public class JdbcBoardRepository implements BoardRepository {
 	// number로 조회
 	@Override
 	public Optional<Board> findByNumber(Long number) {
-		return jdbcTemplate.query("select * from board where number = ?", itemRowMapper(), number).stream().findAny();
+		return jdbcTemplate.query("select * from board where number = ?", itemRowMapper(), number)
+							.stream()
+							.findAny();
+	}
+
+	// 수정
+	@Override
+	public void update(Long number, Board updateBoard) {
+		String sql = "update item set itemname=?, price=?, quantity=? where id=?";
+		jdbcTemplate.update(sql, 
+				updateBoard.getTitle(), 
+				updateBoard.getContent(),
+				number);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
