@@ -28,7 +28,7 @@ public class JdbcBoardRepository implements BoardRepository {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	private RowMapper<Board> itemRowMapper() {
+	private RowMapper<Board> boardRowMapper() {
 		return new RowMapper<Board>() {
 			@Override
 			public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -60,13 +60,13 @@ public class JdbcBoardRepository implements BoardRepository {
 	// 전체 조회
 	@Override
 	public List<Board> findAll() {
-		return jdbcTemplate.query("select * from board", itemRowMapper());
+		return jdbcTemplate.query("select * from board", boardRowMapper());
 	}
 
 	// number로 조회
 	@Override
 	public Optional<Board> findByNumber(Long number) {
-		return jdbcTemplate.query("select * from board where number = ?", itemRowMapper(), number)
+		return jdbcTemplate.query("select * from board where number = ?", boardRowMapper(), number)
 							.stream()
 							.findAny();
 	}
@@ -74,8 +74,8 @@ public class JdbcBoardRepository implements BoardRepository {
 	// 수정
 	@Override
 	public void update(Long number, Board updateBoard) {
-		String sql = "update item set itemname=?, price=?, quantity=? where id=?";
-		jdbcTemplate.update(sql, 
+		String sql = "update board set title=?, content=? where number=?";
+		jdbcTemplate.update(sql,
 				updateBoard.getTitle(), 
 				updateBoard.getContent(),
 				number);

@@ -1,7 +1,5 @@
 package himedia.portfoliospring.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,12 +51,20 @@ public class BoardController {
 	
 	// 글 수정 폼
 	@GetMapping("/board/{boardNumber}/edit")
-	public ModelAndView edit(@PathVariable Long boardNumber) {
+	public ModelAndView editForm(@PathVariable Long boardNumber) {
 		ModelAndView mv = new ModelAndView("boardEdit");
 		mv.addObject("board", boardService.findByNumber(boardNumber).get());
 		return mv;
 	}
-
+	
+	// 글 수정
+	@PostMapping("/board/{boardNumber}/edit")
+	public ModelAndView edit(@PathVariable Long boardNumber, @ModelAttribute Board updateBoard) {
+		ModelAndView mv = new ModelAndView("boardDetail");
+		boardService.update(boardNumber, updateBoard);
+		mv.addObject("board", boardService.findByNumber(boardNumber).get());
+		return mv;
+	}
 }
 
 
