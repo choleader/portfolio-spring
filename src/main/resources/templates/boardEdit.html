@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout-form::layout(~{::title}, ~{::section})}">
+<title>border edit</title>
+
+<section>
 	<div class="container" style="max-width: 600px">
-		<form th:action method="post"]>
+		<form th:action method="post">
+			<div class="text-center my-5">
+				<h1>글 수정</h1>
+			</div>
 			<div class="mb-3">
 				<label for="title" class="form-label">제목</label> <input type="text"
 					name="title" class="form-control" id="title"
@@ -20,15 +21,15 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<button th:onclick="|location.href='@{/board/{boardNumber}(boardNumber=${board.number})}'|" type="button"
-						class="btn btn-outline-dark btn-lg w-100">취소</button>
+					<button
+						th:onclick="|location.href='@{/board/{boardId}(boardId=${board.id})}'|"
+						type="button" class="btn btn-outline-dark btn-lg w-100">취소</button>
 				</div>
 				<div class="col">
-					<button type="submit"
-						class="btn btn-secondary btn-lg w-100">저장</button>
+					<button type="submit" class="btn btn-secondary btn-lg w-100">저장</button>
 				</div>
 			</div>
 		</form>
 	</div>
-</body>
+</section>
 </html>

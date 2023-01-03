@@ -18,8 +18,8 @@ import org.springframework.stereotype.Repository;
 
 import himedia.portfoliospring.domain.Board;
 
-@Repository
-public class JdbcBoardRepository implements BoardRepository {
+//@Repository
+public class JdbcBoardRepository implements BoardIterfaceRepository {
 
 	private final JdbcTemplate jdbcTemplate;
 
@@ -33,7 +33,7 @@ public class JdbcBoardRepository implements BoardRepository {
 			@Override
 			public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Board board = new Board();
-				board.setNumber(rs.getLong("number"));
+				board.setId(rs.getLong("id"));
 				board.setTitle(rs.getString("title"));
 				board.setContent(rs.getString("content"));
 				return board;
@@ -45,7 +45,7 @@ public class JdbcBoardRepository implements BoardRepository {
 	@Override
 	public Board save(Board board) {
 		SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-		jdbcInsert.withTableName("board").usingGeneratedKeyColumns("number");
+		jdbcInsert.withTableName("board").usingGeneratedKeyColumns("id");
 
 		Map<String, String> parameter = new HashMap<>();
 		parameter.put("title", board.getTitle());
@@ -53,7 +53,7 @@ public class JdbcBoardRepository implements BoardRepository {
 
 		Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameter));
 
-		board.setNumber(key.longValue());
+		board.setId(key.longValue());
 		return board;
 	}
 
@@ -63,22 +63,22 @@ public class JdbcBoardRepository implements BoardRepository {
 		return jdbcTemplate.query("select * from board", boardRowMapper());
 	}
 
-	// number로 조회
+	// id로 조회
 	@Override
-	public Optional<Board> findByNumber(Long number) {
-		return jdbcTemplate.query("select * from board where number = ?", boardRowMapper(), number)
+	public Optional<Board> findById(Long id) {
+		return jdbcTemplate.query("select * from board where id = ?", boardRowMapper(), id)
 							.stream()
 							.findAny();
 	}
 
 	// 수정
 	@Override
-	public void update(Long number, Board updateBoard) {
-		String sql = "update board set title=?, content=? where number=?";
+	public void update(Long id, Board updateBoard) {
+		String sql = "update board set title=?, content=? where id = ?";
 		jdbcTemplate.update(sql,
 				updateBoard.getTitle(), 
 				updateBoard.getContent(),
-				number);
+				id);
 	}
 
 }

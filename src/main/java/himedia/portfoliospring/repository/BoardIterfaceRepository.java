@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import himedia.portfoliospring.domain.Board;
 
-public interface BoardRepository {
+public interface BoardIterfaceRepository {
 	Board save(Board board);
 	List<Board> findAll();
-	Optional<Board> findByNumber(Long number);
+	Optional<Board> findById(Long number);
 	void update(Long number, Board updateBoard);
 }

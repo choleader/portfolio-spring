@@ -1,5 +1,7 @@
 package himedia.portfoliospring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,8 @@ public class BoardController {
 	// 게시판 목록
 	@GetMapping("/board")
 	public String board(Model model) {
-		model.addAttribute("boards", boardService.findAllBoard());
+		List<Board> board = boardService.findAllBoard();
+		model.addAttribute("boards", board);
 		return "board";
 	}
 	
@@ -43,28 +46,55 @@ public class BoardController {
 	}
 	
 	// 글 조회
-	@GetMapping("board/{boardNumber}")
-	public String boardDetail(@PathVariable Long boardNumber, Model model) {
-		model.addAttribute("board", boardService.findByNumber(boardNumber).get());
+	@GetMapping("board/{boardId}")
+	public String boardDetail(@PathVariable Long boardId, Model model) {
+		model.addAttribute("board", boardService.findById(boardId).get());
 		return "boardDetail";
 	}
 	
 	// 글 수정 폼
-	@GetMapping("/board/{boardNumber}/edit")
-	public ModelAndView editForm(@PathVariable Long boardNumber) {
+	@GetMapping("/board/{boardId}/edit")
+	public ModelAndView editForm(@PathVariable Long boardId) {
 		ModelAndView mv = new ModelAndView("boardEdit");
-		mv.addObject("board", boardService.findByNumber(boardNumber).get());
+		mv.addObject("board", boardService.findById(boardId).get());
 		return mv;
 	}
 	
 	// 글 수정
-	@PostMapping("/board/{boardNumber}/edit")
-	public ModelAndView edit(@PathVariable Long boardNumber, @ModelAttribute Board updateBoard) {
+//	@PostMapping("/board/{boardId}/edit")
+//	public ModelAndView edit(@PathVariable Long boardId, @ModelAttribute Board updateBoard) {
+//		ModelAndView mv = new ModelAndView("boardDetail");
+//		boardService.update(boardId, updateBoard);
+//		mv.addObject("board", boardService.findByNumber(boardId).get());
+//		return mv;
+//	}
+	
+	@PostMapping("/board/{boardId}/edit")
+	public ModelAndView edit(@PathVariable Long boardId, @ModelAttribute Board updateBoard) {
 		ModelAndView mv = new ModelAndView("boardDetail");
-		boardService.update(boardNumber, updateBoard);
-		mv.addObject("board", boardService.findByNumber(boardNumber).get());
+		Board board = boardService.findById(boardId).get();
+		board.setTitle(updateBoard.getTitle());
+		board.setContent(updateBoard.getContent());
+		boardService.save(board);
+		mv.addObject("board", board);
 		return mv;
 	}
+	
+	// 로그인
+	@GetMapping("/board/login")
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView("login");
+		return mv;
+	}
+	
+	// 회원가입
+	@GetMapping("/board/join")
+	public ModelAndView join() {
+		ModelAndView mv = new ModelAndView("join");
+		return mv;
+	}
+
+
 }
 
 

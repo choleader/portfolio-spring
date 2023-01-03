@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{fragments/layout-form::layout(~{::title}, ~{::section})}">
+
+<title>login</title>
+
+<section>
+	<div class="container" style="max-width: 400px">
+		<div class="text-center my-5">
+			<h2>로그인</h2>
+		</div>
+		<form th:action action="" method="post">
+			<div>
+				<input class="form-control mb-2" id="id" type="text"
+					placeholder="아아디">
+			</div>
+			<div>
+				<input class="form-control mb-2" id="password" type="password"
+					placeholder="비밀번호">
+			</div>
+			<div class="d-grid gap-2">
+				<button class="btn btn-secondary btn-block btn-lg" type="submit">로그인</button>
+			</div>
+		</form>
+	</div>
+</section>
+</html>
