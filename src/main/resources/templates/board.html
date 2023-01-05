@@ -5,48 +5,82 @@
 <meta charset="UTF-8">
 <title>board</title>
 
-	<section>
-		<div class="container" style="max-width: 600px">
-			<div class="text-center my-5">
-				<h1>게시판</h1>
-			</div>
-			<table class="table table-hover text-center">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>글쓴이</th>
-						<!-- <th>조회수</th> -->
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="board: ${boards}">
-						<td th:text="${board.id}"></td>
-						<td><a th:href="@{|/board/${board.id}|}"
-							th:text="${board.title}"></a></td>
-						<td th:text="${board.writer}"></td>
-					</tr>
-				</tbody>
-			</table>
-			<div aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-
-					<li class="page-item "><a class="page-link"></a></li>
-
-					<li class="page-item"><a class="page-link" href="#"> <span
-							aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
-			</div>
-			<div class="text-end">
-				<button onclick="location.href='/board/write'" type="button"
-					class="btn btn-secondary btn-lg">글 쓰기</button>
-			</div>
+<section>
+	<div class="container" style="max-width: 600px">
+		<div class="text-center my-5">
+			<h1>게시판</h1>
 		</div>
-	</section>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<!-- <th>조회수</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="board: ${boards}">
+					<td th:text="${board.id}"></td>
+					<td><a th:href="@{|/board/${board.id}|}"
+						th:text="${board.title}"></a></td>
+					<td th:text="${board.writer}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><a th:href="@{/board(page=1)}"
+					class="page-link" href="#" aria-label="First"> <span
+						aria-hidden="true">First</span>
+				</a></li>
+				<li th:class="${boards.first} ? 'disabled'" class="page-item">
+					<a
+					th:href="${boards.first} ? '#' :@{/board(page=${boards.number})}"
+					class="page-link" href="#" aria-label="Previous"> <span
+						aria-hidden="true">&laquo;</span>
+				</a>
+				</li>
+
+				<li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+					th:class="${page == boards.number + 1} ? 'active'"
+					class="page-item"><a th:text="${page}"
+					th:href="@{/board(page=${page})}" class="page-link" href="#">1</a>
+				</li>
+
+				<li th:class="${boards.last} ? 'disabled'" class="page-item"><a
+					th:href="${boards.last} ? '#' : @{/board(page=${boards.number + 2})}"
+					class="page-link" href="#" aria-label="Next"> <span
+						aria-hidden="true">&raquo;</span>
+				</a></li>
+				<li class="page-item"><a
+					th:href="@{/board(page=${boards.totalPages})}" class="page-link"
+					href="#" aria-label="Last"> <span aria-hidden="true">Last</span>
+				</a></li>
+			</ul>
+			`
+		</nav>
+
+		<div class="text-end">
+			<button onclick="location.href='/board/write'" type="button"
+				class="btn btn-secondary btn-lg">글 쓰기</button>
+		</div>
+	</div>
+</section>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
