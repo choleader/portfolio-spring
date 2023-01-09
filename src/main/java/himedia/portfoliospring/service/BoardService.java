@@ -21,13 +21,15 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	private final SpringDataJpaBoardRepository boardRepository;
 	
-	public void save(Board board) {
+	public Long save(Board board) {
 		boardRepository.save(board);
+		return board.getId();
 	}
 	
 	public List<Board> findAllBoard() {
 		return boardRepository.findAll();
 	}
+	
 	public Page<Board> findAllBoard(Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 10, Sort.Direction.DESC, "id");
@@ -54,6 +56,10 @@ public class BoardService {
 	
 //	public void update(Long number, Board upBoard) {
 //		boardRepository.update(number, upBoard);
+//	}
+	
+//	public void clearBoard() {
+//		boardRepository.deleteAll();
 //	}
 
 }

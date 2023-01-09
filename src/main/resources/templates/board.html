@@ -6,9 +6,9 @@
 <title>board</title>
 
 <section>
-	<div class="container" style="max-width: 600px">
+	<div class="container" style="max-width: 700px">
 		<div class="text-center my-5">
-			<h1>게시판</h1>
+			<h1>자유 게시판</h1>
 		</div>
 		<table class="table table-hover text-center">
 			<thead>
@@ -16,6 +16,7 @@
 					<th>번호</th>
 					<th>제목</th>
 					<th>글쓴이</th>
+					<th>작성일</th>
 					<!-- <th>조회수</th> -->
 				</tr>
 			</thead>
@@ -25,6 +26,7 @@
 					<td><a th:href="@{|/board/${board.id}|}"
 						th:text="${board.title}"></a></td>
 					<td th:text="${board.writer}"></td>
+					<td th:text="${#temporals.format( board.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
 				</tr>
 			</tbody>
 		</table>

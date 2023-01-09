@@ -12,12 +12,12 @@
 			<div class="mb-3">
 				<label for="title" class="form-label">제목</label> <input type="text"
 					name="title" class="form-control" id="title"
-					th:value="${board.title}">
+					th:value="${board.title}" required>
 			</div>
 			<div class="mb-3">
 				<label for="content" class="form-label">내용</label>
 				<textarea name="content" class="form-control" id="content" rows="8"
-					th:text="${board.content}"></textarea>
+					th:text="${board.content}" required></textarea>
 			</div>
 			<div class="row">
 				<div class="col">

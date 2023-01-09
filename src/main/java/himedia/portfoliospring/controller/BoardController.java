@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import himedia.portfoliospring.domain.Board;
 import himedia.portfoliospring.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 public class BoardController {
