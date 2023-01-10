@@ -2,6 +2,7 @@ package himedia.portfoliospring.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,9 @@ public class Board {
 	private String writer;
 	@CreationTimestamp
 	private LocalDateTime createdDate;
+	
+	@Column(name = "searchkeyword")
+	private String searchKeyword;
 }
 
 

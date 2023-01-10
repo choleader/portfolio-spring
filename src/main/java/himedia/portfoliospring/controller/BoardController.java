@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import himedia.portfoliospring.domain.Board;
@@ -27,6 +28,23 @@ public class BoardController {
 	}
 
 	// 게시판 목록
+//	@GetMapping("/board")
+//	public String board(@PageableDefault Pageable pageable, @RequestParam String searchKeyword, Model model) {
+//		Page<Board> board = null;
+//		
+//		if(searchKeyword == null)
+//			board = boardService.findAllBoard(pageable);
+//		else
+//			board = boardService.boardSearchList(searchKeyword, pageable);
+//			
+//		
+//		int startPage = (board.getNumber()/10)*10 + 1;
+//		int endPage = startPage + 9 < board.getTotalPages() ? startPage + 9 : board.getTotalPages();
+//		model.addAttribute("startPage", startPage);
+//		model.addAttribute("endPage", endPage);
+//		model.addAttribute("boards", board);
+//		return "board";
+//	}
 	@GetMapping("/board")
 	public String board(@PageableDefault Pageable pageable, Model model) {
 		Page<Board> board = boardService.findAllBoard(pageable);
@@ -57,7 +75,7 @@ public class BoardController {
 		model.addAttribute("board", boardService.findById(boardId).get());
 		return "boardDetail";
 	}
-
+	
 	// 글 수정 폼
 	@GetMapping("/board/{boardId}/edit")
 	public ModelAndView editForm(@PathVariable Long boardId) {
@@ -67,14 +85,6 @@ public class BoardController {
 	}
 
 	// 글 수정
-//	@PostMapping("/board/{boardId}/edit")
-//	public ModelAndView edit(@PathVariable Long boardId, @ModelAttribute Board updateBoard) {
-//		ModelAndView mv = new ModelAndView("boardDetail");
-//		boardService.update(boardId, updateBoard);
-//		mv.addObject("board", boardService.findByNumber(boardId).get());
-//		return mv;
-//	}
-
 	@PostMapping("/board/{boardId}/edit")
 	public ModelAndView edit(@PathVariable Long boardId, @ModelAttribute Board updateBoard) {
 		ModelAndView mv = new ModelAndView("boardDetail");
@@ -89,7 +99,8 @@ public class BoardController {
 		boardService.removeBoard(boardId);
 		return "redirect:/board";
 	}
-
+	
+	
 	// 로그인
 	@GetMapping("/board/login")
 	public ModelAndView login() {

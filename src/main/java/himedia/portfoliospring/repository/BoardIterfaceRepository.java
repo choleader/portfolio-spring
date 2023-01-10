@@ -8,6 +8,6 @@ import himedia.portfoliospring.domain.Board;
 public interface BoardIterfaceRepository {
 	Board save(Board board);
 	List<Board> findAll();
-	Optional<Board> findById(Long number);
-	void update(Long number, Board updateBoard);
+	Optional<Board> findById(Long id);
+	void update(Long id, Board updateBoard);
 }

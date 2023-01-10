@@ -36,9 +36,11 @@ public class BoardService {
 		return boardRepository.findAll(pageable);
 	}
 	
-//	public Page<Board> findAllBoard(Pageable pageable) {
-//		return boardRepository.findAll(pageable);
-//	}
+//	 검색
+    public Page<Board> boardSearchList(String searchKeyword,Pageable pageable){
+        return boardRepository.findByTitleContaining(pageable, searchKeyword);
+    }
+    
 	
 	public Optional<Board> findById(Long id) {
 		return boardRepository.findById(id);
@@ -53,13 +55,4 @@ public class BoardService {
 	public void removeBoard(Long id) {
 		boardRepository.delete(findById(id).get());
 	}
-	
-//	public void update(Long number, Board upBoard) {
-//		boardRepository.update(number, upBoard);
-//	}
-	
-//	public void clearBoard() {
-//		boardRepository.deleteAll();
-//	}
-
 }
