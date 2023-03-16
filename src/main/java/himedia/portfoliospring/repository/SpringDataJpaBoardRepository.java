@@ -9,3 +9,8 @@ import himedia.portfoliospring.domain.Board;
 public interface SpringDataJpaBoardRepository extends JpaRepository<Board, Long>{
 	Page<Board> findByTitleContaining(Pageable pageable, String searchKeywod);
 }
+
+
+
+
+

@@ -15,7 +15,6 @@
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>글쓴이</th>
 					<th>작성일</th>
 					<!-- <th>조회수</th> -->
 				</tr>
@@ -25,20 +24,19 @@
 					<td th:text="${board.id}"></td>
 					<td><a th:href="@{|/board/${board.id}|}"
 						th:text="${board.title}"></a></td>
-					<td th:text="${board.writer}"></td>
 					<td th:text="${#temporals.format( board.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
 				</tr>
 			</tbody>
 		</table>
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
-				<li class="page-item"><a th:href="@{/board(page=1)}"
+				<li class="page-item"><a th:href="@{/board(page=0, searchKeyword=${searchKeyword})}"
 					class="page-link" href="#" aria-label="First"> <span
 						aria-hidden="true">First</span>
 				</a></li>
 				<li th:class="${boards.first} ? 'disabled'" class="page-item">
 					<a
-					th:href="${boards.first} ? '#' :@{/board(page=${boards.number})}"
+					th:href="${boards.first} ? '#' :@{/board(page=${boards.number-1}, searchKeyword=${searchKeyword})}"
 					class="page-link" href="#" aria-label="Previous"> <span
 						aria-hidden="true">&laquo;</span>
 				</a>
@@ -47,20 +45,19 @@
 				<li th:each="page: ${#numbers.sequence(startPage, endPage)}"
 					th:class="${page == boards.number + 1} ? 'active'"
 					class="page-item"><a th:text="${page}"
-					th:href="@{/board(page=${page})}" class="page-link" href="#">1</a>
+					th:href="@{/board(page=${page-1}, searchKeyword=${searchKeyword})}" class="page-link" href="#">1</a>
 				</li>
 
 				<li th:class="${boards.last} ? 'disabled'" class="page-item"><a
-					th:href="${boards.last} ? '#' : @{/board(page=${boards.number + 2})}"
+					th:href="${boards.last} ? '#' : @{/board(page=${boards.number + 1}, searchKeyword=${searchKeyword})}"
 					class="page-link" href="#" aria-label="Next"> <span
 						aria-hidden="true">&raquo;</span>
 				</a></li>
 				<li class="page-item"><a
-					th:href="@{/board(page=${boards.totalPages})}" class="page-link"
+					th:href="@{/board(page=${boards.totalPages-1}, searchKeyword=${searchKeyword})}" class="page-link"
 					href="#" aria-label="Last"> <span aria-hidden="true">Last</span>
 				</a></li>
 			</ul>
-			`
 		</nav>
 
 		<div class="text-end">
